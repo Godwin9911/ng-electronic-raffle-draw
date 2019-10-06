@@ -1,0 +1,38 @@
+<div class="mx-auto text-center col-xl-6">
+  <div class="container">
+      <h2 class="d-none">Select Number of Winners</h2>
+      <p>Enter the Number of Winners you wish to select from the total Number of Contestant, click shuffle then click view Winners</p>
+      <small class="text-secondary">Contestants Data gotten from Google Sheets</small>
+      <div class="border rounded-lg p-3 m-3 p-md-5">
+          <form #form="ngForm" (ngSubmit)="onSubmit(form)" *ngIf="selectmode">
+            <h3 class="text-nowrap"><i class="fas fa-users"></i> {{contestants?.length}}</h3>
+            <div class="form-group">
+                <Label for="numberOfWinners">Enter Number of Winners</Label>
+                <div class="mx-auto">
+                  <input [(ngModel)]="numberOfWinners" class="form-control mb-3" type="number" name="numberOfWinners" id="numberOfWinners" placeholder="Number of Winners"
+                  required #numberOfWinnersField="ngModel">
+                  <button type="submit" class="btn btn-primary w-100">Shuffle</button>
+                  <p><small [hidden]='!form.submitted || numberOfWinnersField.valid'
+                    class="text-danger">
+                        {{'Please Enter the number of winners.'}}
+                    </small><br/>
+                    <small class="text-danger" [hidden]='!err'>
+                      {{err}}
+                    </small></p>
+                </div>
+            </div>
+          </form>
+          <div *ngIf="!selectmode">
+            <P>You selected <strong>{{numberOfWinners}}</strong> winners from <strong>{{contestants.length}}</strong> contestants</P>
+            <p class="text-secondary">Click the button below to view winners</p>
+            <app-modal [contestants]="contestants" [winnersArray]="winnersArray"></app-modal>
+            <button class="btn btn-lg btn-secondary m-2" (click)="back()">Back</button>
+          </div>
+      </div>
+      <hr/>
+      <div class="mt-5">
+          <small>Created by <a href="http://www.godwinagedah.com.ng">Godwin Agedah</a></small>
+          <p class='small'>Built with React <i class="fab fa-react"></i>, Netlify Functions and Google sheets API</p>
+      </div>
+  </div>
+</div>
